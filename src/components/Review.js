@@ -2,22 +2,28 @@ import {useEffect, useState} from "react";
 import Comment from "./Comment";
 
 function Reviews(){
-    const [comments, setComments] = useState([])
+    const [restaurants, setRestaurant] = useState([])
     useEffect(()=>{
         fetch("http://localhost:9292/reviews")
         .then(res=>res.json())
         .then((data) =>
-            setComments(data)   
+        setRestaurant(data)   
         )
     },[])
-    console.log(comments)
+    console.log(restaurants)
 
-    const allComments = comments.map((comment)=>{
-      return( <Comment key={comment.id}
-        body={comment.comment}
-        restaurant_id={comment.restaurant_id}
-        user_id = {comment.user_id}
-         />)
+    const allComments = restaurants.map((restaurant)=>{
+      return( <Comment key={restaurant.id}
+        name={restaurant.name}
+        location ={restaurant.location}
+        body = {restaurant.reviews.map(review => {
+            return (review.body
+    
+                )
+        })}
+
+
+                 />)
     })
     return(
     <>
