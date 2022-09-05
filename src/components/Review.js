@@ -3,6 +3,13 @@ import Comment from "./Comment";
 
 function Reviews(){
     const [restaurants, setRestaurant] = useState([])
+
+    function addNewReviews(newR){
+        const newReview =  [...restaurants, newR]
+        setRestaurant(newReview)
+       
+       }
+       
     useEffect(()=>{
         fetch("http://localhost:9292/reviews")
         .then(res=>res.json())
@@ -13,15 +20,16 @@ function Reviews(){
     console.log(restaurants)
 
     const allComments = restaurants.map((restaurant)=>{
-      return( <Comment key={restaurant.id}
+      return( <Comment onAddReview = {addNewReviews} key={restaurant.id}
         name={restaurant.name}
         location ={restaurant.location}
         body = {restaurant.reviews.map(review => {
-            return (review.body
-    
-                )
+            return review.body     
         })}
+         user = {restaurant.reviews.map(review => {
+            return review.user.name
 
+         })}
 
                  />)
     })
